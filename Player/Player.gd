@@ -67,6 +67,11 @@ func _ready() -> void:
 	add_to_group("player")
 	global_position = GameState.current_checkpoint
 
+func _input(event: InputEvent) -> void:
+	print("Input event: ", event.as_text())
+	if event is InputEventKey:
+		print("Key pressed: ", event.pressed, " scancode: ", event.scancode)
+
 func _process(delta: float) -> void:
 	update_ui(delta)
 	update_cooldowns(delta)
@@ -91,19 +96,19 @@ func _physics_process(delta: float) -> void:
 	if current_state == STATE_DEAD:
 		return
 	
-	# 直接检查按键状态
-	var left_pressed = Input.is_action_pressed("move_left")
-	var right_pressed = Input.is_action_pressed("move_right")
-	print("Keys - left:", left_pressed, " right:", right_pressed)
-	
-	# 检查输入
-	var move_input = Input.get_axis("move_left", "move_right")
-	print("Move input via get_axis:", move_input)
+	# 检查键盘A和D是否被按下（直接用scancode）
+	var a_pressed = Input.is_physical_key_pressed(KEY_A)
+	var d_pressed = Input.is_physical_key_pressed(KEY_D)
+	print("Physical keys - A:", a_pressed, " D:", d_pressed)
 	
 	was_on_floor = is_on_floor()
 	
 	# 输入处理
-	var input_dir = move_input
+	var input_dir = 0.0
+	if a_pressed:
+		input_dir -= 1.0
+	if d_pressed:
+		input_dir += 1.0
 	
 	if current_state == STATE_IDLE or current_state == STATE_WALK:
 		handle_movement_input(input_dir, delta)
