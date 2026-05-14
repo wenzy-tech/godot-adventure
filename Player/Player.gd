@@ -314,7 +314,7 @@ func take_damage(amount: int, knockback: Vector2 = Vector2.ZERO) -> void:
 func die() -> void:
 	current_state = STATE_DEAD
 	anim_player.play("death")
-	GameState.state = GameState.GAME_OVER
+	GameState.state = GameState.State.GAME_OVER
 
 func heal(amount: int) -> void:
 	GameState.heal(amount)
