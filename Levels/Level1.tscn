@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://level1"]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+
+[node name="Level1" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(100, 400)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(400, 550)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(400, 300)
+limit_left = 0
+limit_top = 0
+limit_right = 2000
+limit_bottom = 600
+zoom = Vector2(2, 2)

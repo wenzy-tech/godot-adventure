@@ -1,0 +1,128 @@
+[gd_scene load_steps=3 format=3 uid="uid://title_screen"]
+
+[ext_resource path="res://Resources/fonts/font.ttf" type="FontFile" id=1]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.1, 0.2, 0.4, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.7, 1.0, 1.0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.2, 0.7, 1.0, 1.0)
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.02, 0.08, 1)
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -180.0
+offset_right = 200.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="MainVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1.0, 0.9, 1.0)
+theme_override_fonts/font = ExtResource(1)
+text = "🎮 宝藏猎人"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="MainVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.5, 0.8, 1.0)
+theme_override_fonts/font = ExtResource(1)
+text = "什刹岛传说"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+layout_mode = 2
+theme_override_colors/separator_color = Color(0.2, 0.5, 0.8, 0.3)
+
+[node name="StartBtn" type="Button" parent="MainVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.0, 1.0, 0.9, 1.0)
+theme_override_colors/font_hover_color = Color(0.3, 1.0, 1.0, 1.0)
+theme_override_fonts/font = ExtResource(1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+text = "▶ 开始游戏"
+
+[node name="LoadBtn" type="Button" parent="MainVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 0.8)
+theme_override_fonts/font = ExtResource(1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+text = "📂 继续游戏"
+
+[node name="SettingsBtn" type="Button" parent="MainVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 0.8)
+theme_override_fonts/font = ExtResource(1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+text = "⚙ 设置"
+
+[node name="QuitBtn" type="Button" parent="MainVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1.0, 0.3, 0.5, 0.8)
+theme_override_fonts/font = ExtResource(1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+text = "✕ 退出游戏"
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.2, 0.3, 0.5, 0.6)
+theme_override_fonts/font = ExtResource(1)
+text = "v0.1 Alpha"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[connection signal="pressed" from="MainVBox/StartBtn" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MainVBox/LoadBtn" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="MainVBox/SettingsBtn" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MainVBox/QuitBtn" to="." method="_on_quit_pressed"]

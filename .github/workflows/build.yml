@@ -1,0 +1,79 @@
+name: Build Godot Adventure Game
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libgtk-3-0 libgl1-mesa-dri libasound2 curl unzip
+
+      - name: Download Godot 4.6.2 Linux headless binary
+        run: |
+          curl -L -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_linux.x86_64.zip
+          unzip -o godot.zip -d godot-bin/
+          chmod +x godot-bin/Godot_v4.6.2-stable_linux.x86_64
+
+      - name: Download Godot 4.6.2 export templates
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates/4.6.2.stable
+          curl -L -o /tmp/templates.tpz \
+            https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_export_templates.tpz
+          unzip -o /tmp/templates.tpz -d /tmp/templates_dir/
+          cp -r /tmp/templates_dir/templates/* \
+             ~/.local/share/godot/export_templates/4.6.2.stable/
+
+      - name: Clean and rebuild
+        run: |
+          rm -rf .import
+          rm -rf .godot
+          rm -rf game/
+          mkdir -p game
+
+      - name: Export HTML5
+        run: |
+          DISPLAY=:99 xvfb-run --server-args="-screen 0 1024x768x24" \
+            godot-bin/Godot_v4.6.2-stable_linux.x86_64 \
+            --path . --headless --export-release "Web" game/index.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: game/
+          name: godot-adventure-game
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      
+      - name: Download artifact
+        uses: actions/download-pages-artifact@v2
+      
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: game/

@@ -1,0 +1,128 @@
+[gd_scene load_steps=3 format=3 uid="uid://hud"]
+
+[ext_resource path="res://Resources/fonts/font.ttf" type="FontFile" id=1]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.1, 0.1, 0.2, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.5, 0.8, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="TopPanel" type="PanelContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 10.0
+offset_right = 200.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="TopPanel"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="HPContainer" type="HBoxContainer" parent="TopPanel/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HPLabel" type="Label" parent="TopPanel/HBox/HPContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_fonts/font = ExtResource(1)
+text = "HP"
+
+[node name="HPBar" type="ProgressBar" parent="TopPanel/HBox/HPContainer"]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+max_value = 100
+show_percentage = false
+
+[node name="CoinsContainer" type="HBoxContainer" parent="TopPanel/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CoinIcon" type="Label" parent="TopPanel/HBox/CoinsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource(1)
+text = "🪙"
+
+[node name="CoinLabel" type="Label" parent="TopPanel/HBox/CoinsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource(1)
+text = "0"
+
+[node name="LevelContainer" type="HBoxContainer" parent="TopPanel/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LevelLabel" type="Label" parent="TopPanel/HBox/LevelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.8, 1, 1)
+theme_override_fonts/font = ExtResource(1)
+text = "Level 1"
+
+[node name="BossHPContainer" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 200.0
+offset_top = -80.0
+offset_right = -200.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="BossNameLabel" type="Label" parent="BossHPContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource(1)
+text = "岛屿守望者"
+horizontal_alignment = 1
+
+[node name="BossHPBar" type="ProgressBar" parent="BossHPContainer"]
+layout_mode = 2
+max_value = 500
+show_percentage = false
+
+[node name="CooldownPanel" type="PanelContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 100.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="SkillsLabel" type="Label" parent="CooldownPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.8, 1, 1)
+theme_override_fonts/font = ExtResource(1)
+text = "技能"
+horizontal_alignment = 1
+
+[node name="DodgeCooldown" type="ProgressBar" parent="CooldownPanel"]
+layout_mode = 2
+max_value = 1
+show_percentage = false
+
+[node name="AttackCooldown" type="ProgressBar" parent="CooldownPanel"]
+layout_mode = 2
+max_value = 2
+show_percentage = false
