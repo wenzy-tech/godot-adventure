@@ -82,4 +82,4 @@ func new_game() -> void:
 	GameState.defeated_enemies.clear()
 	GameState.collected_items.clear()
 	GameState.reset_player_state()
-	GameState.state = GameState.PLAYING
+	GameState.state = GameState.State.PLAYING
