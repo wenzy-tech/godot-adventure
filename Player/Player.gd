@@ -86,6 +86,10 @@ func update_cooldowns(delta: float) -> void:
 		hurt_timer -= delta
 
 func _physics_process(delta: float) -> void:
+	# Debug input
+	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+		print("Move input detected: ", Input.get_axis("move_left", "move_right"))
+	
 	if current_state == STATE_DEAD:
 		return
 	
