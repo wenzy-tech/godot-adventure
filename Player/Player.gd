@@ -31,8 +31,17 @@ class_name Player
 @onready var state_label: Label = $StateLabel
 
 # 状态
-enum State { IDLE, WALK, JUMP, FALL, ATTACK, CHARGE, DODGE, HURT, DEAD }
-var current_state: State = State.IDLE
+const STATE_IDLE = 0
+const STATE_WALK = 1
+const STATE_JUMP = 2
+const STATE_FALL = 3
+const STATE_ATTACK = 4
+const STATE_CHARGE = 5
+const STATE_DODGE = 6
+const STATE_HURT = 7
+const STATE_DEAD = 8
+
+var current_state: int = STATE_IDLE
 var facing_direction: int = 1
 
 # 状态变量
@@ -51,14 +60,9 @@ var hurt_timer: float = 0.0
 # 攻击碰撞信息
 var attack_hit_history: Array = []
 
-# 蓄力特效节点
-var charge_effect: Node2D
-
 func _ready() -> void:
 	attack_hitbox.monitoring = false
 	add_to_group("player")
-	
-	# 初始化位置
 	global_position = GameState.current_checkpoint
 
 func _process(delta: float) -> void:
@@ -68,7 +72,8 @@ func _process(delta: float) -> void:
 
 func update_ui(delta: float) -> void:
 	if state_label:
-		state_label.text = State.keys()[current_state]
+		var state_names = ["IDLE", "WALK", "JUMP", "FALL", "ATTACK", "CHARGE", "DODGE", "HURT", "DEAD"]
+		state_label.text = state_names[current_state]
 
 func update_cooldowns(delta: float) -> void:
 	if attack_cooldown_timer > 0:
@@ -81,43 +86,36 @@ func update_cooldowns(delta: float) -> void:
 		hurt_timer -= delta
 
 func _physics_process(delta: float) -> void:
-	if current_state == State.DEAD:
+	if current_state == STATE_DEAD:
 		return
 	
 	was_on_floor = is_on_floor()
 	
 	# 输入处理
-	var input_dir = Vector2.ZERO
-	input_dir.x = Input.get_axis("move_left", "move_right")
+	var input_dir = Input.get_axis("move_left", "move_right")
 	
-	match current_state:
-		case State.IDLE, State.WALK:
-			handle_movement_input(input_dir, delta)
-			handle_jump_input()
-			handle_attack_input()
-			handle_dodge_input()
-		
-		case State.JUMP, State.FALL:
-			handle_movement_input(input_dir, delta)
-			handle_attack_input()
-			handle_dodge_input()
-			handle_landing()
-		
-		case State.CHARGE:
-			# 蓄力时不移动
-			pass
-		
-		case State.DODGE:
-			pass
-		
-		case State.HURT:
-			if hurt_timer <= 0:
-				current_state = State.IDLE
+	if current_state == STATE_IDLE or current_state == STATE_WALK:
+		handle_movement_input(input_dir, delta)
+		handle_jump_input()
+		handle_attack_input()
+		handle_dodge_input()
+	elif current_state == STATE_JUMP or current_state == STATE_FALL:
+		handle_movement_input(input_dir, delta)
+		handle_attack_input()
+		handle_dodge_input()
+		handle_landing()
+	elif current_state == STATE_CHARGE:
+		pass
+	elif current_state == STATE_DODGE:
+		pass
+	elif current_state == STATE_HURT:
+		if hurt_timer <= 0:
+			current_state = STATE_IDLE
 	
 	# 应用重力
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		velocity.y = min(velocity.y, max_fall_speed)
+		velocity.y = mini(velocity.y, max_fall_speed)
 	
 	# 移动
 	move_and_slide()
@@ -133,18 +131,18 @@ func _physics_process(delta: float) -> void:
 	# 更新动画
 	update_animation()
 
-func handle_movement_input(input_dir: Vector2, delta: float) -> void:
+func handle_movement_input(input_dir: float, delta: float) -> void:
 	if is_attacking or is_dodging:
 		return
 	
-	if input_dir.x != 0:
-		velocity.x = input_dir.x * move_speed
-		if is_on_floor() and current_state != State.JUMP:
-			current_state = State.WALK
+	if input_dir != 0:
+		velocity.x = input_dir * move_speed
+		if is_on_floor() and current_state != STATE_JUMP:
+			current_state = STATE_WALK
 	else:
 		velocity.x = move_toward(velocity.x, 0, move_speed)
-		if is_on_floor() and current_state == State.WALK:
-			current_state = State.IDLE
+		if is_on_floor() and current_state == STATE_WALK:
+			current_state = STATE_IDLE
 
 func handle_jump_input() -> void:
 	if is_attacking or is_dodging:
@@ -152,24 +150,21 @@ func handle_jump_input() -> void:
 	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_force
-		current_state = State.JUMP
+		current_state = STATE_JUMP
 		anim_player.play("jump")
 
 func handle_attack_input() -> void:
 	if is_attacking or is_dodging:
 		return
 	
-	# 闪避优先
 	if Input.is_action_just_pressed("dodge"):
 		start_dodge()
 		return
 	
-	# 普通攻击
 	if Input.is_action_just_pressed("attack") and attack_cooldown_timer <= 0:
 		execute_normal_attack()
 		return
 	
-	# 蓄力攻击
 	if Input.is_action_pressed("attack") and charged_attack_cooldown_timer <= 0 and not is_charging:
 		start_charge()
 	
@@ -183,32 +178,28 @@ func handle_dodge_input() -> void:
 func handle_charge_input(delta: float) -> void:
 	if is_charging:
 		charge_time += delta
-		# 蓄力特效可以在这里更新
 
 func handle_landing() -> void:
 	if is_on_floor() and velocity.y >= 0:
-		current_state = State.IDLE if velocity.x == 0 else State.WALK
+		current_state = STATE_IDLE if velocity.x == 0 else STATE_WALK
 
 func start_dodge() -> void:
 	is_dodging = true
 	dodge_cooldown_timer = dodge_cooldown
-	current_state = State.DODGE
+	current_state = STATE_DODGE
 	
-	# 计算闪避方向
 	var dodge_dir = facing_direction
 	if Input.is_action_pressed("move_left"):
 		dodge_dir = -1
 	elif Input.is_action_pressed("move_right"):
 		dodge_dir = 1
 	
-	# 执行闪避位移
 	var target_pos = global_position + Vector2(dodge_distance * dodge_dir, 0)
 	var tween = create_tween()
 	tween.tween_property(self, "global_position:x", target_pos.x, dodge_duration)
 	tween.set_ease(Tween.EASE_OUT_QUINT)
 	tween.set_trans(Tween.TRANS_QUINT)
 	
-	# 无敌帧效果
 	modulate.a = 0.5
 	
 	await get_tree().create_timer(dodge_duration).timeout
@@ -216,14 +207,14 @@ func start_dodge() -> void:
 	is_dodging = false
 	
 	if is_on_floor():
-		current_state = State.IDLE
+		current_state = STATE_IDLE
 	else:
-		current_state = State.FALL
+		current_state = STATE_FALL
 
 func execute_normal_attack() -> void:
 	is_attacking = true
 	attack_cooldown_timer = attack_cooldown
-	current_state = State.ATTACK
+	current_state = STATE_ATTACK
 	
 	attack_hitbox.monitoring = true
 	attack_hit_history.clear()
@@ -235,14 +226,14 @@ func execute_normal_attack() -> void:
 	is_attacking = false
 	
 	if is_on_floor():
-		current_state = State.IDLE
+		current_state = STATE_IDLE
 	else:
-		current_state = State.FALL
+		current_state = STATE_FALL
 
 func start_charge() -> void:
 	is_charging = true
 	charge_time = 0.0
-	current_state = State.CHARGE
+	current_state = STATE_CHARGE
 	anim_player.play("charge")
 
 func release_charged_attack() -> void:
@@ -250,8 +241,7 @@ func release_charged_attack() -> void:
 	is_attacking = true
 	charged_attack_cooldown_timer = charged_attack_cooldown
 	
-	# 根据蓄力时间计算伤害
-	var charge_ratio = min(charge_time / charged_time, 1.0)
+	var charge_ratio = mini(charge_time / charged_time, 1.0)
 	var damage = int(lerp(float(charged_attack_min_damage), float(charged_attack_max_damage), charge_ratio))
 	damage = GameState.get_attack_damage(damage)
 	
@@ -265,30 +255,25 @@ func release_charged_attack() -> void:
 	is_attacking = false
 	
 	if is_on_floor():
-		current_state = State.IDLE
+		current_state = STATE_IDLE
 	else:
-		current_state = State.FALL
+		current_state = STATE_FALL
 
 func update_animation() -> void:
 	if is_attacking or is_charging or is_dodging:
 		return
 	
 	match current_state:
-		State.IDLE:
+		STATE_IDLE:
 			anim_player.play("idle")
-		State.WALK:
+		STATE_WALK:
 			anim_player.play("walk")
-		State.JUMP:
-			if velocity.y < 0:
-				anim_player.play("jump_up")
-			else:
-				anim_player.play("jump_down")
-		State.FALL:
+		STATE_JUMP:
+			anim_player.play("jump_up")
+		STATE_FALL:
 			anim_player.play("fall")
-		State.HURT:
+		STATE_HURT:
 			anim_player.play("hurt")
-
-# ================== 碰撞系统 ==================
 
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body in attack_hit_history:
@@ -303,17 +288,14 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 		var knockback = Vector2(facing_direction * 300, -100)
 		body.take_damage(damage, knockback)
 
-# ================== 受伤系统 ==================
-
 func take_damage(amount: int, knockback: Vector2 = Vector2.ZERO) -> void:
-	if GameState.has_shield or current_state == State.DODGE:
+	if GameState.has_shield or current_state == STATE_DODGE:
 		return
 	
 	GameState.player_current_hp -= amount
-	current_state = State.HURT
+	current_state = STATE_HURT
 	hurt_timer = 0.3
 	
-	# 击退
 	velocity = knockback
 	move_and_slide()
 	
@@ -324,14 +306,12 @@ func take_damage(amount: int, knockback: Vector2 = Vector2.ZERO) -> void:
 		die()
 
 func die() -> void:
-	current_state = State.DEAD
+	current_state = STATE_DEAD
 	anim_player.play("death")
 	GameState.state = GameState.GAME_OVER
 
 func heal(amount: int) -> void:
 	GameState.heal(amount)
-
-# ================== 状态查询 ==================
 
 func get_facing_direction() -> int:
 	return facing_direction
