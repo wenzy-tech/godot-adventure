@@ -46,7 +46,8 @@ func update_enemy(delta: float) -> void:
 		shoot_arrow(dir)
 
 func shoot_arrow(dir: Vector2) -> void:
-	animation_player.play("shoot")
+	if animation_player.has_animation("shoot"):
+		animation_player.play("shoot")
 	
 	if bullet_scene:
 		var arrow = bullet_scene.instantiate()
