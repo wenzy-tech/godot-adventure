@@ -61,6 +61,8 @@ var hurt_timer: float = 0.0
 var attack_hit_history: Array = []
 
 func _ready() -> void:
+	print("Player ready!")
+	print("Player position: ", global_position)
 	attack_hitbox.monitoring = false
 	add_to_group("player")
 	global_position = GameState.current_checkpoint
