@@ -72,9 +72,23 @@ var keys_pressed := {
 func _ready() -> void:
 	print("Player ready!")
 	print("Player position: ", global_position)
-	attack_hitbox.monitoring = false
+	if attack_hitbox:
+		attack_hitbox.monitoring = false
+	else:
+		print("ERROR: attack_hitbox is null!")
 	add_to_group("player")
 	global_position = GameState.current_checkpoint
+
+func _process(delta: float) -> void:
+	# 更新冷却计时器
+	if attack_cooldown_timer > 0:
+		attack_cooldown_timer -= delta
+	if charged_attack_cooldown_timer > 0:
+		charged_attack_cooldown_timer -= delta
+	if dodge_cooldown_timer > 0:
+		dodge_cooldown_timer -= delta
+	if hurt_timer > 0:
+		hurt_timer -= delta
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
@@ -175,7 +189,7 @@ func handle_attack_input() -> void:
 		keys_pressed["dodge"] = false
 		return
 	
-	if keys_pressed["attack"] and attack_cooldown_timer <= 0:
+	if keys_pressed["attack"]:
 		print("Executing attack!")
 		execute_normal_attack()
 		keys_pressed["attack"] = false
