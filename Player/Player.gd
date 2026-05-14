@@ -91,10 +91,14 @@ func _physics_process(delta: float) -> void:
 	if current_state == STATE_DEAD:
 		return
 	
+	# 直接检查按键状态
+	var left_pressed = Input.is_action_pressed("move_left")
+	var right_pressed = Input.is_action_pressed("move_right")
+	print("Keys - left:", left_pressed, " right:", right_pressed)
+	
 	# 检查输入
 	var move_input = Input.get_axis("move_left", "move_right")
-	if move_input != 0:
-		print("Move input: ", move_input, " state: ", current_state)
+	print("Move input via get_axis:", move_input)
 	
 	was_on_floor = is_on_floor()
 	
