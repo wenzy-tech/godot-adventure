@@ -23,6 +23,7 @@ func _process(delta: float) -> void:
 func _on_start_pressed() -> void:
 	SaveManager.new_game()
 	get_tree().change_scene_to_file("res://Levels/Level1.tscn")
+	GameState.state = GameState.State.PLAYING
 
 func _on_load_pressed() -> void:
 	if SaveManager.load_game():
