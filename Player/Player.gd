@@ -197,7 +197,7 @@ func start_dodge() -> void:
 	var target_pos = global_position + Vector2(dodge_distance * dodge_dir, 0)
 	var tween = create_tween()
 	tween.tween_property(self, "global_position:x", target_pos.x, dodge_duration)
-	tween.set_ease(Tween.EASE_OUT_QUINT)
+	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_QUINT)
 	
 	modulate.a = 0.5
