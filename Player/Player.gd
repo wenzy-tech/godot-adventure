@@ -88,9 +88,15 @@ func update_cooldowns(delta: float) -> void:
 		hurt_timer -= delta
 
 func _physics_process(delta: float) -> void:
-	print("Player physics running, state:", current_state)
 	if current_state == STATE_DEAD:
 		return
+	
+	# 检查输入
+	var move_input = Input.get_axis("move_left", "move_right")
+	if move_input != 0:
+		print("Move input: ", move_input, " state: ", current_state)
+	
+	var input_dir = move_input
 	
 	was_on_floor = is_on_floor()
 	
@@ -135,11 +141,13 @@ func _physics_process(delta: float) -> void:
 	update_animation()
 
 func handle_movement_input(input_dir: float, delta: float) -> void:
+	print("handle_movement called, input_dir:", input_dir, " is_attacking:", is_attacking, " is_dodging:", is_dodging)
 	if is_attacking or is_dodging:
 		return
 	
 	if input_dir != 0:
 		velocity.x = input_dir * move_speed
+		print("Setting velocity.x to:", velocity.x)
 		if is_on_floor() and current_state != STATE_JUMP:
 			current_state = STATE_WALK
 	else:
