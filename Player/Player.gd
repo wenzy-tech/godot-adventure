@@ -166,6 +166,7 @@ func handle_jump_input() -> void:
 		keys_pressed["jump"] = false
 
 func handle_attack_input() -> void:
+	print("attack input called, keys_pressed[attack]:", keys_pressed["attack"])
 	if is_attacking or is_dodging:
 		return
 	
@@ -175,6 +176,7 @@ func handle_attack_input() -> void:
 		return
 	
 	if keys_pressed["attack"] and attack_cooldown_timer <= 0:
+		print("Executing attack!")
 		execute_normal_attack()
 		keys_pressed["attack"] = false
 
