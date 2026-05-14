@@ -153,7 +153,7 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	attack_hit_history.append(body)
 	
 	if body.has_method("take_damage"):
-		body.take_damage(damage if "damage" in locals() else normal_attack_damage)
+		body.take_damage(normal_attack_damage)
 
 # ================== 闪避系统 ==================
 
@@ -178,7 +178,7 @@ func dodge() -> void:
 	var target_pos = global_position + Vector2(dodge_distance * dodge_dir, 0)
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", target_pos, dodge_duration)
-	tween.set_ease(Tween.EASE_OUT_QUINT)
+	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_QUINT)
 	
 	# 闪烁效果

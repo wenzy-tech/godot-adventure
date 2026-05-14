@@ -51,7 +51,7 @@ func play_sfx(sfx_name: String, volume_override: float = 0.0) -> void:
 			player.volume_db = volume_override
 		add_child(player)
 		player.play()
-		player.tree_exited.connect(func: player.queue_free())
+		player.tree_exited.connect(func(): player.queue_free())
 
 func set_music_volume(volume: float) -> void:
 	# volume: 0.0 to 1.0
