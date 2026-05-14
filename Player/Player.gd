@@ -60,6 +60,15 @@ var hurt_timer: float = 0.0
 # 攻击碰撞信息
 var attack_hit_history: Array = []
 
+# 按键状态
+var keys_pressed := {
+	"left": false,
+	"right": false,
+	"jump": false,
+	"attack": false,
+	"dodge": false
+}
+
 func _ready() -> void:
 	print("Player ready!")
 	print("Player position: ", global_position)
@@ -68,46 +77,32 @@ func _ready() -> void:
 	global_position = GameState.current_checkpoint
 
 func _input(event: InputEvent) -> void:
-	print("Input event: ", event.as_text())
-	if event is InputEventKey:
-		print("Key pressed: ", event.pressed, " scancode: ", event.scancode)
-
-func _process(delta: float) -> void:
-	update_ui(delta)
-	update_cooldowns(delta)
-	handle_charge_input(delta)
-
-func update_ui(delta: float) -> void:
-	if state_label:
-		var state_names = ["IDLE", "WALK", "JUMP", "FALL", "ATTACK", "CHARGE", "DODGE", "HURT", "DEAD"]
-		state_label.text = state_names[current_state]
-
-func update_cooldowns(delta: float) -> void:
-	if attack_cooldown_timer > 0:
-		attack_cooldown_timer -= delta
-	if charged_attack_cooldown_timer > 0:
-		charged_attack_cooldown_timer -= delta
-	if dodge_cooldown_timer > 0:
-		dodge_cooldown_timer -= delta
-	if hurt_timer > 0:
-		hurt_timer -= delta
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_A: keys_pressed["left"] = true
+			KEY_D: keys_pressed["right"] = true
+			KEY_W: keys_pressed["jump"] = true
+			KEY_J: keys_pressed["attack"] = true
+			KEY_SHIFT: keys_pressed["dodge"] = true
+	elif event is InputEventKey and not event.pressed:
+		match event.keycode:
+			KEY_A: keys_pressed["left"] = false
+			KEY_D: keys_pressed["right"] = false
+			KEY_W: keys_pressed["jump"] = false
+			KEY_J: keys_pressed["attack"] = false
+			KEY_SHIFT: keys_pressed["dodge"] = false
 
 func _physics_process(delta: float) -> void:
 	if current_state == STATE_DEAD:
 		return
 	
-	# 检查键盘A和D是否被按下（直接用scancode）
-	var a_pressed = Input.is_physical_key_pressed(KEY_A)
-	var d_pressed = Input.is_physical_key_pressed(KEY_D)
-	print("Physical keys - A:", a_pressed, " D:", d_pressed)
-	
 	was_on_floor = is_on_floor()
 	
-	# 输入处理
+	# 基于按键状态计算输入
 	var input_dir = 0.0
-	if a_pressed:
+	if keys_pressed["left"]:
 		input_dir -= 1.0
-	if d_pressed:
+	if keys_pressed["right"]:
 		input_dir += 1.0
 	
 	if current_state == STATE_IDLE or current_state == STATE_WALK:
@@ -148,13 +143,11 @@ func _physics_process(delta: float) -> void:
 	update_animation()
 
 func handle_movement_input(input_dir: float, delta: float) -> void:
-	print("handle_movement called, input_dir:", input_dir, " is_attacking:", is_attacking, " is_dodging:", is_dodging)
 	if is_attacking or is_dodging:
 		return
 	
 	if input_dir != 0:
 		velocity.x = input_dir * move_speed
-		print("Setting velocity.x to:", velocity.x)
 		if is_on_floor() and current_state != STATE_JUMP:
 			current_state = STATE_WALK
 	else:
@@ -166,32 +159,27 @@ func handle_jump_input() -> void:
 	if is_attacking or is_dodging:
 		return
 	
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if keys_pressed["jump"] and is_on_floor():
 		velocity.y = jump_force
 		current_state = STATE_JUMP
 		anim_player.play("jump")
+		keys_pressed["jump"] = false
 
 func handle_attack_input() -> void:
 	if is_attacking or is_dodging:
 		return
 	
-	if Input.is_action_just_pressed("dodge"):
+	if keys_pressed["dodge"] and dodge_cooldown_timer <= 0 and is_on_floor():
 		start_dodge()
+		keys_pressed["dodge"] = false
 		return
 	
-	if Input.is_action_just_pressed("attack") and attack_cooldown_timer <= 0:
+	if keys_pressed["attack"] and attack_cooldown_timer <= 0:
 		execute_normal_attack()
-		return
-	
-	if Input.is_action_pressed("attack") and charged_attack_cooldown_timer <= 0 and not is_charging:
-		start_charge()
-	
-	if Input.is_action_just_released("attack") and is_charging:
-		release_charged_attack()
+		keys_pressed["attack"] = false
 
 func handle_dodge_input() -> void:
-	if Input.is_action_just_pressed("dodge") and dodge_cooldown_timer <= 0 and is_on_floor():
-		start_dodge()
+	pass
 
 func handle_charge_input(delta: float) -> void:
 	if is_charging:
@@ -207,9 +195,9 @@ func start_dodge() -> void:
 	current_state = STATE_DODGE
 	
 	var dodge_dir = facing_direction
-	if Input.is_action_pressed("move_left"):
+	if keys_pressed["left"]:
 		dodge_dir = -1
-	elif Input.is_action_pressed("move_right"):
+	elif keys_pressed["right"]:
 		dodge_dir = 1
 	
 	var target_pos = global_position + Vector2(dodge_distance * dodge_dir, 0)
