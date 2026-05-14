@@ -208,7 +208,7 @@ func take_damage(amount: int) -> void:
 
 func die() -> void:
 	animation_player.play("death")
-	state = "Dead"
+	GameState.state = GameState.GAME_OVER
 	# 触发 GAME OVER
 	
 func heal(amount: int) -> void:

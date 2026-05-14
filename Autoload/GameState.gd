@@ -4,6 +4,22 @@ extends Node
 # GAME STATE - 全局游戏状态管理
 # ============================================
 
+# 游戏状态枚举
+enum State {
+	MENU,
+	PLAYING,
+	PAUSED,
+	GAME_OVER,
+	VICTORY,
+	LEVEL_COMPLETE
+}
+
+enum Difficulty {
+	EASY,
+	NORMAL,
+	HARD
+}
+
 # 当前关卡
 var current_level: int = 1
 var current_checkpoint: Vector2 = Vector2(100, 400)
@@ -23,35 +39,18 @@ var coins: int = 0
 var defeated_enemies: Array = []
 var collected_items: Array = []
 
-# 游戏状态
-enum GameState {
-	MENU,
-	PLAYING,
-	PAUSED,
-	GAME_OVER,
-	VICTORY,
-	LEVEL_COMPLETE
-}
-
-var state: GameState = GameState.MENU
-
-# 难度
-enum Difficulty {
-	EASY,
-	NORMAL,
-	HARD
-}
-
+# 当前状态
+var state: State = State.MENU
 var difficulty: Difficulty = Difficulty.NORMAL
 
 func _process(delta: float) -> void:
-	# 更新攻击buff计时
+	# 更新攻击buff
 	if attack_buff_timer > 0:
 		attack_buff_timer -= delta
 		if attack_buff_timer <= 0:
 			player_attack_multiplier = 1.0
 	
-	# 更新护盾计时
+	# 更新护盾
 	if shield_timer > 0:
 		shield_timer -= delta
 		if shield_timer <= 0:
@@ -78,12 +77,12 @@ func take_damage(amount: int) -> bool:
 	player_current_hp -= amount
 	if player_current_hp <= 0:
 		player_current_hp = 0
-		state = GameState.GAME_OVER
+		state = State.GAME_OVER
 		return true
 	return false
 
 func heal(amount: int) -> void:
-	player_current_hp = min(player_current_hp + amount, player_max_hp)
+	player_current_hp = mini(player_current_hp + amount, player_max_hp)
 
 func add_coins(amount: int) -> void:
 	coins += amount
@@ -97,7 +96,7 @@ func set_checkpoint(pos: Vector2) -> void:
 func next_level() -> void:
 	current_level += 1
 	if current_level > 4:
-		state = GameState.VICTORY
+		state = State.VICTORY
 	else:
 		reset_level_state()
 

@@ -181,4 +181,4 @@ func die_boss() -> void:
 	queue_free()
 	
 	# 触发关卡完成
-	GameState.state = GameState.GameState.LEVEL_COMPLETE
+	GameState.state = GameState.LEVEL_COMPLETE
