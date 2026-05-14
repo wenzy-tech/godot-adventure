@@ -96,12 +96,10 @@ func _physics_process(delta: float) -> void:
 	if move_input != 0:
 		print("Move input: ", move_input, " state: ", current_state)
 	
-	var input_dir = move_input
-	
 	was_on_floor = is_on_floor()
 	
 	# 输入处理
-	var input_dir = Input.get_axis("move_left", "move_right")
+	input_dir = move_input
 	
 	if current_state == STATE_IDLE or current_state == STATE_WALK:
 		handle_movement_input(input_dir, delta)
