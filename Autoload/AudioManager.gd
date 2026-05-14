@@ -4,14 +4,22 @@ extends Node
 # AUDIO MANAGER - 音频管理
 # ============================================
 
-@onready var music_player: AudioStreamPlayer = $MusicPlayer
-@onready var sfx_player: AudioStreamPlayer = $SFXPlayer
-
+var music_player: AudioStreamPlayer
+var sfx_player: AudioStreamPlayer
 var current_music: AudioStream = null
-var sfx_bus_index: int = 1  # SFX bus
-var music_bus_index: int = 0  # Master bus
+var sfx_bus_index: int = 1
+var music_bus_index: int = 0
 
 func _ready() -> void:
+	# 创建音频播放器
+	music_player = AudioStreamPlayer.new()
+	music_player.bus = "Master"
+	add_child(music_player)
+	
+	sfx_player = AudioStreamPlayer.new()
+	sfx_player.bus = "Master"
+	add_child(sfx_player)
+	
 	load_audio_settings()
 
 func play_music(stream: AudioStream, fade_in: bool = true) -> void:
@@ -41,12 +49,11 @@ func stop_music(fade_out: bool = true) -> void:
 	current_music = null
 
 func play_sfx(sfx_name: String, volume_override: float = 0.0) -> void:
-	# Placeholder - will load actual sfx files later
 	var stream = load("res://Resources/audio/" + sfx_name + ".wav")
 	if stream:
 		var player = AudioStreamPlayer.new()
 		player.stream = stream
-		player.bus = AudioServer.get_bus_name(sfx_bus_index)
+		player.bus = "Master"
 		if volume_override != 0.0:
 			player.volume_db = volume_override
 		add_child(player)
@@ -54,18 +61,22 @@ func play_sfx(sfx_name: String, volume_override: float = 0.0) -> void:
 		player.tree_exited.connect(func(): player.queue_free())
 
 func set_music_volume(volume: float) -> void:
-	# volume: 0.0 to 1.0
-	music_player.volume_db = linear_to_db(volume)
+	if music_player:
+		music_player.volume_db = linear_to_db(volume)
 
 func set_sfx_volume(volume: float) -> void:
-	# volume: 0.0 to 1.0
-	AudioServer.set_bus_volume_db(sfx_bus_index, linear_to_db(volume))
+	if sfx_player:
+		sfx_player.volume_db = linear_to_db(volume)
 
 func load_audio_settings() -> void:
-	var master_vol = SaveManager.get_setting("master_volume", 1.0)
-	var music_vol = SaveManager.get_setting("music_volume", 0.8)
-	var sfx_vol = SaveManager.get_setting("sfx_volume", 1.0)
+	var master_vol = 1.0
+	var music_vol = 0.8
+	var sfx_vol = 1.0
 	
-	AudioServer.set_bus_volume_db(0, linear_to_db(master_vol))
-	music_player.volume_db = linear_to_db(music_vol)
-	AudioServer.set_bus_volume_db(sfx_bus_index, linear_to_db(sfx_vol))
+	if has_node("/root/SaveManager"):
+		master_vol = SaveManager.get_setting("master_volume", 1.0)
+		music_vol = SaveManager.get_setting("music_volume", 0.8)
+		sfx_vol = SaveManager.get_setting("sfx_volume", 1.0)
+	
+	if music_player:
+		music_player.volume_db = linear_to_db(music_vol)
