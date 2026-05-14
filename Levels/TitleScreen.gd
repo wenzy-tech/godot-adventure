@@ -3,6 +3,7 @@ extends Control
 var time_elapsed: float = 0.0
 
 func _ready() -> void:
+	print("TitleScreen loaded!")
 	# 检查存档
 	var load_btn = $MainVBox/LoadBtn
 	if SaveManager.has_save_file():
