@@ -180,19 +180,35 @@ func handle_jump_input() -> void:
 		keys_pressed["jump"] = false
 
 func handle_attack_input() -> void:
-	print("attack input called, keys_pressed[attack]:", keys_pressed["attack"], " cooldown:", attack_cooldown_timer)
-	if is_attacking or is_dodging:
+	print("attack input called, keys_pressed[attack]:", keys_pressed["attack"])
+	if is_attacking:
+		return
+	if is_dodging:
 		return
 	
+	# 闪避优先
 	if keys_pressed["dodge"] and dodge_cooldown_timer <= 0 and is_on_floor():
 		start_dodge()
 		keys_pressed["dodge"] = false
 		return
 	
+	# 普通攻击 - 强制执行，不管冷却
 	if keys_pressed["attack"]:
 		print("Executing attack!")
-		execute_normal_attack()
 		keys_pressed["attack"] = false
+		# 直接执行，不通过 cooldown
+		is_attacking = true
+		current_state = STATE_ATTACK
+		attack_hitbox.monitoring = true
+		attack_hit_history.clear()
+		anim_player.play("attack")
+		await get_tree().create_timer(0.3).timeout
+		attack_hitbox.monitoring = false
+		is_attacking = false
+		if is_on_floor():
+			current_state = STATE_IDLE
+		else:
+			current_state = STATE_FALL
 
 func handle_dodge_input() -> void:
 	pass
