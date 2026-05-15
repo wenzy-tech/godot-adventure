@@ -25,13 +25,6 @@ func _ready() -> void:
 	detection_range = 400
 	attack_range = 80
 	current_hp = max_hp
-	
-	# BOSS 特有属性
-	if health_bar:
-		health_bar.max_value = boss_max_hp
-		health_bar.value = current_hp
-		health_bar.visible = true
-	
 	add_to_group("boss")
 
 func update_enemy(delta: float) -> void:
@@ -156,8 +149,6 @@ func _spawn_magic_ball(dir: Vector2) -> void:
 func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	current_hp -= amount
 	
-	if health_bar:
-		health_bar.value = current_hp
 	
 	if animation_player.has_animation("hurt"):
 		animation_player.play("hurt")
