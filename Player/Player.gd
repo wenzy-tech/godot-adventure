@@ -79,6 +79,9 @@ func _ready() -> void:
 	add_to_group("player")
 	global_position = GameState.current_checkpoint
 
+	# 初始化血量显示
+	update_health_bar()
+
 func _process(delta: float) -> void:
 	# 更新冷却计时器
 	if attack_cooldown_timer > 0:
@@ -89,6 +92,32 @@ func _process(delta: float) -> void:
 		dodge_cooldown_timer -= delta
 	if hurt_timer > 0:
 		hurt_timer -= delta
+	
+	# 更新血量显示
+	update_health_bar()
+
+func update_health_bar() -> void:
+	if has_node("HealthBar"):
+		var ratio = float(GameState.player_current_hp) / float(GameState.player_max_hp)
+		var health_bar = $"HealthBar"
+		var health_text = $"HealthText"
+		
+		# 更新血条宽度
+		var max_width = 44.0
+		var current_width = max_width * ratio
+		health_bar.size.x = current_width
+		
+		# 更新颜色（低血量变红）
+		if ratio < 0.3:
+			health_bar.color = Color(0.8, 0.2, 0.2, 1)  # 红色
+		elif ratio < 0.6:
+			health_bar.color = Color(0.8, 0.8, 0.2, 1)  # 黄色
+		else:
+			health_bar.color = Color(0.2, 0.8, 0.2, 1)  # 绿色
+		
+		# 更新文字
+		if health_text:
+			health_text.text = "%d/%d" % [GameState.player_current_hp, GameState.player_max_hp]
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:

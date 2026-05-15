@@ -18,17 +18,11 @@ var is_hurt: bool = false
 var player_ref: Node2D
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var health_bar: ProgressBar = $HealthBar
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var hitbox: CollisionShape2D = $Hitbox
 
 func _ready() -> void:
 	current_hp = max_hp
 	add_to_group("enemies")
-	
-	if health_bar:
-		health_bar.max_value = max_hp
-		health_bar.value = current_hp
 
 func _physics_process(delta: float) -> void:
 	if not is_alive:
@@ -52,8 +46,14 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	is_hurt = true
 	
 	# 更新血条
-	if health_bar:
-		health_bar.value = current_hp
+	if has_node("HealthBar"):
+		var ratio = float(current_hp) / float(max_hp)
+		var bar = $"HealthBar"
+		var max_width = 36.0
+		bar.size.x = max_width * ratio
+	
+	if has_node("Label"):
+		$"Label".text = str(current_hp)
 	
 	# 受伤动画
 	if animation_player.has_animation("hurt"):
