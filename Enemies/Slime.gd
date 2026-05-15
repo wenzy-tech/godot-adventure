@@ -21,7 +21,7 @@ func update_enemy(delta: float) -> void:
 	if dist < attack_range:
 		# 攻击
 		if animation_player.has_animation("attack") and animation_player.current_animation != "attack":
-			animation_player.play("attack")
+			animation_player.play("idle")
 		attack_player()
 	elif dist < detection_range:
 		# 追逐

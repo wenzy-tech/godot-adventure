@@ -33,7 +33,7 @@ func update_enemy(delta: float) -> void:
 	
 	if dist < attack_range:
 		# 近距离攻击
-		animation_player.play("attack")
+		animation_player.play("idle")
 		attack_player()
 	elif dist < detection_range:
 		# 追逐
@@ -44,7 +44,7 @@ func update_enemy(delta: float) -> void:
 			dash_timer = dash_cooldown
 			is_dashing = true
 			velocity = dir * dash_speed
-			animation_player.play("attack")
+			animation_player.play("idle")
 			await get_tree().create_timer(0.3).timeout
 			is_dashing = false
 		else:

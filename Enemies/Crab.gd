@@ -35,7 +35,7 @@ func update_enemy(delta: float) -> void:
 	var dir = get_direction_to_player()
 	
 	if dist < attack_range:
-		animation_player.play("attack")
+		animation_player.play("idle")
 		attack_player()
 	elif dist < detection_range:
 		# 准备冲刺
