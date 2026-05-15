@@ -130,7 +130,7 @@ func _magic_barrage() -> void:
 
 func _rush_attack() -> void:
 	# 快速冲刺攻击
-	animation_player.play("dash")
+	animation_player.play("attack")
 	var dir = get_direction_to_player()
 	for i in range(5):
 		velocity = dir * 500

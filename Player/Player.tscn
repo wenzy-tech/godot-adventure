@@ -104,6 +104,7 @@ tracks/0/keys = {
 _data = {
 "attack": SubResource("Animation_attack"),
 "death": SubResource("Animation_death"),
+"fall": SubResource("Animation_jump"),
 "hurt": SubResource("Animation_hurt"),
 "idle": SubResource("Animation_idle"),
 "jump": SubResource("Animation_jump"),

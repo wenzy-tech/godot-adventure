@@ -44,7 +44,7 @@ func update_enemy(delta: float) -> void:
 			dash_timer = dash_cooldown
 			is_dashing = true
 			velocity = dir * dash_speed
-			animation_player.play("dash")
+			animation_player.play("attack")
 			await get_tree().create_timer(0.3).timeout
 			is_dashing = false
 		else:
