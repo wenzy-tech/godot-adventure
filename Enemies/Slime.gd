@@ -6,7 +6,7 @@ extends BaseEnemy
 
 func _ready() -> void:
 	max_hp = 20
-	damage = 10
+	damage = 5
 	move_speed = 60
 	detection_range = 150
 	attack_range = 40

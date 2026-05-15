@@ -11,7 +11,7 @@ var dash_speed: float = 300.0
 
 func _ready() -> void:
 	max_hp = 30
-	damage = 15
+	damage = 8
 	move_speed = 100
 	detection_range = 200
 	attack_range = 50

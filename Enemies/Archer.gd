@@ -11,7 +11,7 @@ var preferred_distance: float = 200.0
 
 func _ready() -> void:
 	max_hp = 15
-	damage = 12
+	damage = 8
 	move_speed = 80
 	detection_range = 300
 	attack_range = 250

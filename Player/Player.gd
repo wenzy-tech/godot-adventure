@@ -12,7 +12,7 @@ class_name Player
 @export var max_fall_speed: float = 800.0
 
 # 攻击参数
-@export var normal_attack_damage: int = 20
+@export var normal_attack_damage: int = 15
 @export var charged_attack_min_damage: int = 30
 @export var charged_attack_max_damage: int = 60
 @export var charged_time: float = 1.0

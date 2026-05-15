@@ -20,7 +20,7 @@ var boss_max_hp: int = 500
 
 func _ready() -> void:
 	max_hp = boss_max_hp
-	damage = 25
+	damage = 15
 	move_speed = 80
 	detection_range = 400
 	attack_range = 80
@@ -48,7 +48,7 @@ func update_enemy(delta: float) -> void:
 
 func _transition_to_phase2() -> void:
 	current_phase = Phase.PHASE2
-	damage = 30  # 伤害增加
+	damage = 20  # Phase2 伤害
 	move_speed = 110  # 速度增加
 	animation_player.play("enrage")
 	
