@@ -50,6 +50,7 @@ var is_dodging: bool = false
 var is_charging: bool = false
 var charge_time: float = 0.0
 var was_on_floor: bool = false
+var invicible_timer: float = 0.0  # 受伤后无敌时间
 
 # 冷却计时器
 var attack_cooldown_timer: float = 0.0
@@ -83,7 +84,13 @@ func _ready() -> void:
 	update_health_bar()
 
 func _process(delta: float) -> void:
-	# 更新冷却计时器
+	# 更新无敌时间
+	if invicible_timer > 0:
+		invicible_timer -= delta
+		# 无敌时闪烁效果
+		modulate.a = 0.5 if int(invicible_timer * 20) % 2 == 0 else 1.0
+	else:
+		modulate.a = 1.0
 	if attack_cooldown_timer > 0:
 		attack_cooldown_timer -= delta
 	if charged_attack_cooldown_timer > 0:
@@ -356,12 +363,13 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 		body.take_damage(damage, knockback)
 
 func take_damage(amount: int, knockback: Vector2 = Vector2.ZERO) -> void:
-	if GameState.has_shield or current_state == STATE_DODGE:
+	if GameState.has_shield or current_state == STATE_DODGE or invicible_timer > 0:
 		return
 	
 	GameState.player_current_hp -= amount
 	current_state = STATE_HURT
 	hurt_timer = 0.3
+	invicible_timer = 0.5  # 受伤后0.5秒无敌时间
 	
 	velocity = knockback
 	move_and_slide()
