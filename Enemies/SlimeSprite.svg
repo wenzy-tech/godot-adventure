@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 64">
+  <!-- Slime Sprite Sheet: 4 frames -->
+  <!-- Frame 0: Idle A -->
+  <ellipse cx="16" cy="48" rx="14" ry="12" fill="#8b4513"/>
+  <ellipse cx="16" cy="44" rx="12" ry="10" fill="#cd853f"/>
+  <circle cx="12" cy="40" r="3" fill="#222"/>
+  <circle cx="20" cy="40" r="3" fill="#222"/>
+  
+  <!-- Frame 1: Idle B -->
+  <ellipse cx="48" cy="46" rx="14" ry="14" fill="#8b4513"/>
+  <ellipse cx="48" cy="42" rx="12" ry="12" fill="#cd853f"/>
+  <circle cx="44" cy="38" r="3" fill="#222"/>
+  <circle cx="52" cy="38" r="3" fill="#222"/>
+  
+  <!-- Frame 2: Jump -->
+  <ellipse cx="80" cy="44" rx="12" ry="10" fill="#8b4513"/>
+  <ellipse cx="80" cy="40" rx="10" ry="8" fill="#cd853f"/>
+  <circle cx="76" cy="36" r="3" fill="#222"/>
+  <circle cx="84" cy="36" r="3" fill="#222"/>
+  
+  <!-- Frame 3: Squash -->
+  <ellipse cx="112" cy="50" rx="16" ry="8" fill="#8b4513"/>
+  <ellipse cx="112" cy="48" rx="14" ry="6" fill="#cd853f"/>
+  <circle cx="108" cy="46" r="2" fill="#222"/>
+  <circle cx="116" cy="46" r="2" fill="#222"/>
+</svg>

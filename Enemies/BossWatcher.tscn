@@ -1,9 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://boss_watcher"]
+[gd_scene load_steps=6 format=3 uid="uid://boss_watcher"]
 
 [ext_resource path="res://Enemies/BossWatcher.gd" type="Script" id=1]
+[ext_resource path="res://Enemies/BossWatcherSprite.svg" type="Texture2D" id=2]
 
 [sub_resource type="RectangleShape2D" id="CollisionShape2D_boss"]
 size = Vector2(96, 128)
+
+[sub_resource type="Animation" id="Animation_idle"]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_attack"]
+length = 0.5
+loop = false
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"values": [2, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_boss"]
+_data = {
+"attack": SubResource("Animation_attack"),
+"idle": SubResource("Animation_idle")
+}
 
 [node name="BossWatcher" type="CharacterBody2D"]
 collision_layer = 4
@@ -14,8 +51,9 @@ script = ExtResource(1)
 shape = SubResource("CollisionShape2D_boss")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.6, 0.2, 0.8, 1)
-scale = Vector2(3, 3)
+position = Vector2(0, -32)
+texture = ExtResource(2)
+hframes = 4
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -60.0
@@ -25,4 +63,10 @@ offset_bottom = -80.0
 max_value = 500
 show_percentage = false
 
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CollisionShape2D_boss")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_boss")
+}
