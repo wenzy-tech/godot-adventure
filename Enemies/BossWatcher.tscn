@@ -55,13 +55,27 @@ position = Vector2(0, -32)
 texture = ExtResource(2)
 hframes = 4
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBarBG" type="ColorRect" parent="."]
 offset_left = -60.0
-offset_top = -100.0
+offset_top = -128.0
 offset_right = 60.0
-offset_bottom = -80.0
-max_value = 500
-show_percentage = false
+offset_bottom = -115.0
+color = Color(0.2, 0.2, 0.2, 0.8)
+
+[node name="HealthBar" type="ColorRect" parent="."]
+offset_left = -58.0
+offset_top = -126.0
+offset_right = 58.0
+offset_bottom = -117.0
+color = Color(0.8, 0.2, 0.2, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -145.0
+offset_right = 40.0
+offset_bottom = -130.0
+text = "500"
+horizontal_alignment = 1
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CollisionShape2D_boss")
