@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://boss_watcher"]
 
 [ext_resource path="res://Enemies/BossWatcher.gd" type="Script" id=1]
-[ext_resource path="res://Enemies/BossWatcherSprite.svg" type="Texture2D" id=2]
+[ext_resource path="res://Enemies/BossWatcherSprite.png" type="Texture2D" id=2]
 
 [sub_resource type="RectangleShape2D" id="CollisionShape2D_boss"]
 size = Vector2(96, 128)
