@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 32" width="256" height="64">
+  <rect width="256" height="64" fill="none"/>
+  <!-- 玩家像素角色 4帧 -->
+  <!-- 帧1: 站立 -->
+  <g transform="translate(0,0)">
+    <!-- 头 -->
+    <rect x="12" y="0" width="8" height="8" fill="#F5D6A8"/>
+    <!-- 头发 -->
+    <rect x="12" y="0" width="8" height="2" fill="#8B4513"/>
+    <!-- 眼睛 -->
+    <rect x="14" y="3" width="2" height="2" fill="#333"/>
+    <!-- 身体 -->
+    <rect x="10" y="8" width="12" height="10" fill="#228B22"/>
+    <!-- 手臂 -->
+    <rect x="6" y="9" width="4" height="6" fill="#F5D6A8"/>
+    <rect x="22" y="9" width="4" height="6" fill="#F5D6A8"/>
+    <!-- 腿 -->
+    <rect x="10" y="18" width="5" height="8" fill="#8B4513"/>
+    <rect x="17" y="18" width="5" height="8" fill="#8B4513"/>
+    <!-- 剑 -->
+    <rect x="24" y="8" width="2" height="12" fill="#C0C0C0"/>
+    <rect x="23" y="8" width="4" height="2" fill="#FFD700"/>
+  </g>
+  <!-- 帧2: 行走左 -->
+  <g transform="translate(32,0)">
+    <rect x="12" y="0" width="8" height="8" fill="#F5D6A8"/>
+    <rect x="12" y="0" width="8" height="2" fill="#8B4513"/>
+    <rect x="14" y="3" width="2" height="2" fill="#333"/>
+    <rect x="10" y="8" width="12" height="10" fill="#228B22"/>
+    <rect x="6" y="10" width="4" height="6" fill="#F5D6A8"/>
+    <rect x="22" y="8" width="4" height="6" fill="#F5D6A8"/>
+    <!-- 抬左腿 -->
+    <rect x="8" y="18" width="5" height="6" fill="#8B4513"/>
+    <rect x="17" y="20" width="5" height="6" fill="#8B4513"/>
+    <rect x="24" y="6" width="2" height="12" fill="#C0C0C0"/>
+    <rect x="23" y="6" width="4" height="2" fill="#FFD700"/>
+  </g>
+  <!-- 帧3: 行走右 -->
+  <g transform="translate(64,0)">
+    <rect x="12" y="0" width="8" height="8" fill="#F5D6A8"/>
+    <rect x="12" y="0" width="8" height="2" fill="#8B4513"/>
+    <rect x="14" y="3" width="2" height="2" fill="#333"/>
+    <rect x="10" y="8" width="12" height="10" fill="#228B22"/>
+    <rect x="6" y="8" width="4" height="6" fill="#F5D6A8"/>
+    <rect x="22" y="10" width="4" height="6" fill="#F5D6A8"/>
+    <!-- 抬右腿 -->
+    <rect x="10" y="20" width="5" height="6" fill="#8B4513"/>
+    <rect x="19" y="18" width="5" height="6" fill="#8B4513"/>
+    <rect x="24" y="6" width="2" height="12" fill="#C0C0C0"/>
+    <rect x="23" y="6" width="4" height="2" fill="#FFD700"/>
+  </g>
+  <!-- 帧4: 待机 -->
+  <g transform="translate(96,0)">
+    <rect x="12" y="0" width="8" height="8" fill="#F5D6A8"/>
+    <rect x="12" y="0" width="8" height="2" fill="#8B4513"/>
+    <rect x="14" y="3" width="2" height="2" fill="#333"/>
+    <rect x="10" y="8" width="12" height="10" fill="#228B22"/>
+    <rect x="6" y="9" width="4" height="6" fill="#F5D6A8"/>
+    <rect x="22" y="9" width="4" height="6" fill="#F5D6A8"/>
+    <rect x="10" y="18" width="5" height="8" fill="#8B4513"/>
+    <rect x="17" y="18" width="5" height="8" fill="#8B4513"/>
+    <rect x="24" y="10" width="2" height="10" fill="#C0C0C0"/>
+    <rect x="23" y="10" width="4" height="2" fill="#FFD700"/>
+  </g>
+</svg>
