@@ -3,7 +3,6 @@ extends Control
 var time_elapsed: float = 0.0
 
 func _ready() -> void:
-	print("TitleScreen loaded!")
 	# 检查存档
 	var load_btn = $MainVBox/LoadBtn
 	if SaveManager.has_save_file():
@@ -22,11 +21,8 @@ func _process(delta: float) -> void:
 	title.modulate = Color(0.0, glow, glow * 0.9, 1.0)
 
 func _on_start_pressed() -> void:
-	print("Start button pressed!")
 	SaveManager.new_game()
-	print("New game initialized, changing scene...")
 	get_tree().change_scene_to_file("res://Levels/Level1.tscn")
-	print("Scene changed!")
 	GameState.state = GameState.State.PLAYING
 
 func _on_load_pressed() -> void:

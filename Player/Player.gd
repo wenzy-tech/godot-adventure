@@ -71,12 +71,8 @@ var keys_pressed := {
 }
 
 func _ready() -> void:
-	print("Player ready!")
-	print("Player position: ", global_position)
 	if attack_hitbox:
 		attack_hitbox.monitoring = false
-	else:
-		print("ERROR: attack_hitbox is null!")
 	add_to_group("player")
 	global_position = GameState.current_checkpoint
 
@@ -216,7 +212,6 @@ func handle_jump_input() -> void:
 		keys_pressed["jump"] = false
 
 func handle_attack_input() -> void:
-	print("attack input called, keys_pressed[attack]:", keys_pressed["attack"])
 	if is_attacking:
 		return
 	if is_dodging:
@@ -230,7 +225,6 @@ func handle_attack_input() -> void:
 	
 	# 普通攻击 - 强制执行，不管冷却
 	if keys_pressed["attack"]:
-		print("Executing attack!")
 		keys_pressed["attack"] = false
 		# 直接执行，不通过 cooldown
 		is_attacking = true

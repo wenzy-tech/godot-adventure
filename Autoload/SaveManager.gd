@@ -26,9 +26,6 @@ func save_game() -> void:
 		var json_str = JSON.stringify(data)
 		file.store_line(json_str)
 		file.close()
-		print("Game saved!")
-	else:
-		print("Failed to save game")
 
 func load_game() -> bool:
 	if FileAccess.file_exists(SAVE_FILE_PATH):
@@ -39,7 +36,6 @@ func load_game() -> bool:
 			if data:
 				GameState.load_save_data(data)
 				file.close()
-				print("Game loaded!")
 				return true
 	return false
 
@@ -49,7 +45,6 @@ func has_save_file() -> bool:
 func delete_save() -> void:
 	if FileAccess.file_exists(SAVE_FILE_PATH):
 		DirAccess.remove_absolute(SAVE_FILE_PATH)
-		print("Save file deleted")
 
 func save_settings() -> void:
 	var file = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.WRITE)
