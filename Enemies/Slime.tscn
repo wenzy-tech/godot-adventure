@@ -4,7 +4,7 @@
 [ext_resource path="res://Enemies/SlimeSprite.png" type="Texture2D" id=2]
 
 [sub_resource type="RectangleShape2D" id="CollisionShape2D_slime"]
-size = Vector2(32, 32)
+size = Vector2(16, 16)
 
 [sub_resource type="Animation" id="Animation_idle"]
 length = 0.8
@@ -54,6 +54,7 @@ shape = SubResource("CollisionShape2D_slime")
 position = Vector2(0, -8)
 texture = ExtResource(2)
 hframes = 4
+scale = Vector2(0.5, 0.5)
 
 [node name="HealthBarBG" type="ColorRect" parent="."]
 offset_left = -20.0

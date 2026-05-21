@@ -4,7 +4,7 @@
 [ext_resource path="res://Enemies/SkeletonSprite.png" type="Texture2D" id=2]
 
 [sub_resource type="RectangleShape2D" id="CollisionShape2D_skeleton"]
-size = Vector2(32, 48)
+size = Vector2(16, 24)
 
 [sub_resource type="Animation" id="Animation_idle"]
 length = 0.6
@@ -66,6 +66,7 @@ shape = SubResource("CollisionShape2D_skeleton")
 position = Vector2(0, -16)
 texture = ExtResource(2)
 hframes = 4
+scale = Vector2(0.5, 0.5)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -20.0
