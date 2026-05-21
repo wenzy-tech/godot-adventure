@@ -347,7 +347,6 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body in attack_hit_history:
 		return
 	if not is_attacking:
-		print("DEBUG: is_attacking=false, not processing hit")
 		return
 	
 	attack_hit_history.append(body)
@@ -355,10 +354,7 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
 		var damage = GameState.get_attack_damage(normal_attack_damage)
 		var knockback = Vector2(facing_direction * 300, -100)
-		print("DEBUG: Hit ", body.name, " damage=", damage, " knockback=", knockback)
-		body.take_damage(damage, knockback)
 	else:
-		print("DEBUG: Body ", body.name, " has no take_damage method")
 
 func take_damage(amount: int, knockback: Vector2 = Vector2.ZERO) -> void:
 	if GameState.has_shield or current_state == STATE_DODGE or invicible_timer > 0:

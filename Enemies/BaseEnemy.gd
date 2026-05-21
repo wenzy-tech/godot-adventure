@@ -5,7 +5,7 @@ class_name BaseEnemy
 # BASE ENEMY - 敌人基类
 # ============================================
 
-@export var max_hp: int = 30
+@export var max_hp: int = 100
 @export var damage: int = 10
 @export var move_speed: float = 100.0
 @export var detection_range: float = 200.0
