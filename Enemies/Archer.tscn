@@ -4,7 +4,7 @@
 [ext_resource path="res://Enemies/ArcherSprite.png" type="Texture2D" id=2]
 
 [sub_resource type="RectangleShape2D" id="CollisionShape2D_archer"]
-size = Vector2(14, 24)
+size = Vector2(7.0, 12.0)
 
 [sub_resource type="Animation" id="Animation_idle"]
 length = 0.6
@@ -63,7 +63,7 @@ script = ExtResource(1)
 shape = SubResource("CollisionShape2D_archer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(0.0, -8.0)
 texture = ExtResource(2)
 hframes = 4
 scale = Vector2(0.25, 0.25)

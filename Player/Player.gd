@@ -7,9 +7,9 @@ class_name Player
 
 # 移动参数
 @export var move_speed: float = 300.0
-@export var jump_force: float = -500.0
-@export var gravity: float = 1200.0
-@export var max_fall_speed: float = 800.0
+@export var jump_force: float = -750.0
+@export var gravity: float = 1000.0
+@export var max_fall_speed: float = 600.0
 
 # 攻击参数
 @export var normal_attack_damage: int = 15
