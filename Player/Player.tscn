@@ -126,7 +126,7 @@ shape = SubResource("CollisionShape2D_player")
 position = Vector2(0, 8)
 texture = ExtResource(2)
 hframes = 4
-scale = Vector2(0.35, 0.35)
+scale = Vector2(0.25, 0.25)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
