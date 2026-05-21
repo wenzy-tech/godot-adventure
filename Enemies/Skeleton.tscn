@@ -66,7 +66,7 @@ shape = SubResource("CollisionShape2D_skeleton")
 position = Vector2(0, -16)
 texture = ExtResource(2)
 hframes = 4
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.35, 0.35)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -20.0

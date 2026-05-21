@@ -66,7 +66,7 @@ shape = SubResource("CollisionShape2D_boss")
 position = Vector2(0, -32)
 texture = ExtResource(2)
 hframes = 4
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.35, 0.35)
 
 [node name="HealthBarBG" type="ColorRect" parent="."]
 offset_left = -60.0

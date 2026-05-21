@@ -7,10 +7,10 @@
 [ext_resource path="res://Enemies/BossWatcher.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id="Ground_shape"]
-size = Vector2(3000, 32)
+size = Vector2(3000, 64)
 
 [sub_resource type="RectangleShape2D" id="Platform_shape"]
-size = Vector2(128, 20)
+size = Vector2(192, 32)
 
 [node name="Level1" type="Node2D"]
 
@@ -30,9 +30,9 @@ shape = SubResource("Ground_shape")
 
 [node name="Sprite" type="ColorRect" parent="Ground"]
 offset_left = -1500.0
-offset_top = -16.0
+offset_top = -32.0
 offset_right = 1500.0
-offset_bottom = 16.0
+offset_bottom = 32.0
 color = Color(0.3, 0.5, 0.2, 1)
 
 [node name="Platform1" type="StaticBody2D" parent="."]
@@ -44,9 +44,9 @@ shape = SubResource("Platform_shape")
 
 [node name="Sprite" type="ColorRect" parent="Platform1"]
 offset_left = -64.0
-offset_top = -10.0
+offset_top = -16.0
 offset_right = 64.0
-offset_bottom = 10.0
+offset_bottom = 16.0
 color = Color(0.5, 0.35, 0.2, 1)
 
 [node name="Platform2" type="StaticBody2D" parent="."]
@@ -58,9 +58,9 @@ shape = SubResource("Platform_shape")
 
 [node name="Sprite" type="ColorRect" parent="Platform2"]
 offset_left = -64.0
-offset_top = -10.0
+offset_top = -16.0
 offset_right = 64.0
-offset_bottom = 10.0
+offset_bottom = 16.0
 color = Color(0.5, 0.35, 0.2, 1)
 
 [node name="Platform3" type="StaticBody2D" parent="."]
@@ -72,9 +72,9 @@ shape = SubResource("Platform_shape")
 
 [node name="Sprite" type="ColorRect" parent="Platform3"]
 offset_left = -64.0
-offset_top = -10.0
+offset_top = -16.0
 offset_right = 64.0
-offset_bottom = 10.0
+offset_bottom = 16.0
 color = Color(0.5, 0.35, 0.2, 1)
 
 [node name="Platform4" type="StaticBody2D" parent="."]
@@ -86,9 +86,9 @@ shape = SubResource("Platform_shape")
 
 [node name="Sprite" type="ColorRect" parent="Platform4"]
 offset_left = -64.0
-offset_top = -10.0
+offset_top = -16.0
 offset_right = 64.0
-offset_bottom = 10.0
+offset_bottom = 16.0
 color = Color(0.5, 0.35, 0.2, 1)
 
 [node name="Checkpoint" type="Marker2D" parent="."]
@@ -104,9 +104,9 @@ shape = SubResource("Platform_shape")
 
 [node name="Sprite" type="ColorRect" parent="Platform5"]
 offset_left = -64.0
-offset_top = -10.0
+offset_top = -16.0
 offset_right = 64.0
-offset_bottom = 10.0
+offset_bottom = 16.0
 color = Color(0.5, 0.35, 0.2, 1)
 
 [node name="Platform6" type="StaticBody2D" parent="."]
@@ -118,9 +118,9 @@ shape = SubResource("Platform_shape")
 
 [node name="Sprite" type="ColorRect" parent="Platform6"]
 offset_left = -64.0
-offset_top = -10.0
+offset_top = -16.0
 offset_right = 64.0
-offset_bottom = 10.0
+offset_bottom = 16.0
 color = Color(0.5, 0.35, 0.2, 1)
 
 [node name="BossArena" type="StaticBody2D" parent="."]
@@ -131,9 +131,9 @@ shape = SubResource("Ground_shape")
 
 [node name="Sprite" type="ColorRect" parent="BossArena"]
 offset_left = -300.0
-offset_top = -16.0
+offset_top = -32.0
 offset_right = 300.0
-offset_bottom = 16.0
+offset_bottom = 32.0
 color = Color(0.5, 0.1, 0.1, 1)
 
 [node name="BossDoor" type="ColorRect" parent="BossArena"]
