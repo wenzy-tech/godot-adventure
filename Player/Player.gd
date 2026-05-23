@@ -229,6 +229,12 @@ func handle_attack_input() -> void:
 		# 直接执行，不通过 cooldown
 		is_attacking = true
 		current_state = STATE_ATTACK
+		
+		# 根据朝向调整攻击碰撞区域位置
+		var collision_shape = attack_hitbox.get_node("CollisionShape2D")
+		if collision_shape:
+			collision_shape.position.x = facing_direction * 50
+		
 		attack_hitbox.monitoring = true
 		attack_hit_history.clear()
 		anim_player.play("attack")
