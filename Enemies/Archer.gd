@@ -10,7 +10,7 @@ var bullet_scene: PackedScene = preload("res://Enemies/Arrow.tscn")
 var preferred_distance: float = 200.0
 
 func _ready() -> void:
-	max_hp = 15
+	max_hp = 75
 	damage = 8
 	move_speed = 80
 	detection_range = 300
