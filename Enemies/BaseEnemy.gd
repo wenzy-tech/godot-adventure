@@ -60,7 +60,9 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	
 	# 受伤闪烁效果
 	if sprite:
+		print("DEBUG: Setting sprite.modulate = Color.RED")
 		sprite.modulate = Color.RED
+		print("DEBUG: sprite.modulate now:", sprite.modulate)
 	if hurt_timer:
 		hurt_timer.start(0.15)
 	
@@ -74,9 +76,9 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	if has_node("Label"):
 		$"Label".text = str(current_hp)
 	
-	# 受伤动画
-	if animation_player.has_animation("hurt"):
-		animation_player.play("hurt")
+	# 受伤动画 - DISABLED FOR DEBUG
+	# if animation_player.has_animation("hurt"):
+	# 	animation_player.play("hurt")
 	
 	# 击退
 	if knockback_dir != Vector2.ZERO:
