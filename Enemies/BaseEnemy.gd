@@ -10,7 +10,7 @@ class_name BaseEnemy
 @export var move_speed: float = 100.0
 @export var detection_range: float = 200.0
 @export var attack_range: float = 50.0
-@export var knockback_force: float = 0.3
+@export var knockback_force: float = 5.0
 
 var current_hp: int
 var is_alive: bool = true
