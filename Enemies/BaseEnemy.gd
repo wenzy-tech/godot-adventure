@@ -48,7 +48,9 @@ func update_enemy(delta: float) -> void:
 	pass
 
 func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
+	print("DEBUG: take_damage START - name:", get_name(), " current_hp:", current_hp)
 	if not is_alive:
+		print("DEBUG: take_damage early return - is_alive=false")
 		return
 	
 	print("DEBUG: take_damage called - current_hp:", current_hp, " max_hp:", max_hp, " damage:", amount)
@@ -84,6 +86,8 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	# 死亡检查
 	if current_hp <= 0:
 		die()
+
+	print("DEBUG: take_damage END - name:", get_name(), " current_hp:", current_hp, " is_hurt:", is_hurt, " sprite:", sprite)
 
 func die() -> void:
 	print("DEBUG: die() called - current_hp:", current_hp, " max_hp:", max_hp)
