@@ -49,8 +49,10 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	if not is_alive:
 		return
 	
+	print("DEBUG: take_damage called - current_hp:", current_hp, " max_hp:", max_hp, " damage:", amount)
 	current_hp -= amount
 	is_hurt = true
+	print("DEBUG: after damage - current_hp:", current_hp)
 	
 	# 受伤闪烁效果
 	if sprite:
