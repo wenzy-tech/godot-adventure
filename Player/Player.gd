@@ -353,7 +353,7 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	
 	if body.has_method("take_damage"):
 		var damage = GameState.get_attack_damage(normal_attack_damage)
-		var knockback = Vector2(facing_direction * 300, -100)
+		var knockback = Vector2(facing_direction * 200, 0)
 		body.take_damage(damage, knockback)
 
 func take_damage(amount: int, knockback: Vector2 = Vector2.ZERO) -> void:
