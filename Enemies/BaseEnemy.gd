@@ -27,7 +27,9 @@ func _ready() -> void:
 	hurt_timer.timeout.connect(_on_hurt_timer_timeout)
 
 func _physics_process(delta: float) -> void:
+	# DEBUG: trace when is_alive becomes false
 	if not is_alive:
+		print("DEBUG: _physics_process called but is_alive=false, about to return")
 		return
 	
 	# 查找玩家
