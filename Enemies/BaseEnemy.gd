@@ -19,10 +19,12 @@ var player_ref: Node2D
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var hurt_timer: Timer = $HurtTimer
 
 func _ready() -> void:
 	current_hp = max_hp
 	add_to_group("enemies")
+	hurt_timer.timeout.connect(_on_hurt_timer_timeout)
 
 func _physics_process(delta: float) -> void:
 	if not is_alive:
@@ -34,6 +36,10 @@ func _physics_process(delta: float) -> void:
 	
 	update_enemy(delta)
 
+func _on_hurt_timer_timeout() -> void:
+	is_hurt = false
+	sprite.modulate = Color.WHITE
+
 func update_enemy(delta: float) -> void:
 	# 重写实现具体敌人行为
 	pass
@@ -44,6 +50,10 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	
 	current_hp -= amount
 	is_hurt = true
+	
+	# 受伤闪烁效果
+	sprite.modulate = Color.RED
+	hurt_timer.start(0.15)
 	
 	# 更新血条
 	if has_node("HealthBar"):
