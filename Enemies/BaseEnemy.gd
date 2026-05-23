@@ -84,10 +84,10 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	# if animation_player.has_animation("hurt"):
 	# 	animation_player.play("hurt")
 	
-	# 击退
-	if knockback_dir != Vector2.ZERO:
-		velocity = knockback_dir * knockback_force
-		move_and_slide()
+	# 击退 - DISABLED FOR DEBUG
+	# if knockback_dir != Vector2.ZERO:
+	# 	velocity = knockback_dir * knockback_force
+	# 	move_and_slide()
 	
 	# 死亡检查
 	if current_hp <= 0:
