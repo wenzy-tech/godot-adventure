@@ -85,3 +85,7 @@ offset_right = 15.0
 offset_bottom = -20.0
 text = "20"
 horizontal_alignment = 1
+
+[node name="HurtTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
