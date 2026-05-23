@@ -38,7 +38,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_hurt_timer_timeout() -> void:
 	is_hurt = false
-	sprite.modulate = Color.WHITE
+	if sprite:
+		sprite.modulate = Color.WHITE
 
 func update_enemy(delta: float) -> void:
 	# 重写实现具体敌人行为
@@ -52,8 +53,10 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	is_hurt = true
 	
 	# 受伤闪烁效果
-	sprite.modulate = Color.RED
-	hurt_timer.start(0.15)
+	if sprite:
+		sprite.modulate = Color.RED
+	if hurt_timer:
+		hurt_timer.start(0.15)
 	
 	# 更新血条
 	if has_node("HealthBar"):

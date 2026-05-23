@@ -10,7 +10,7 @@ var is_dashing: bool = false
 var dash_speed: float = 300.0
 
 func _ready() -> void:
-	max_hp = 90
+	max_hp = 30
 	damage = 8
 	move_speed = 100
 	detection_range = 200
