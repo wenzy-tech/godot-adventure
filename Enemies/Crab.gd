@@ -11,7 +11,7 @@ var charge_speed: float = 400.0
 var charge_duration: float = 0.5
 
 func _ready() -> void:
-	max_hp = 50
+	max_hp = 120
 	damage = 10
 	move_speed = 120
 	detection_range = 250
