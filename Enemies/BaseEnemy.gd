@@ -25,6 +25,10 @@ func _ready() -> void:
 	current_hp = max_hp
 	add_to_group("enemies")
 	hurt_timer.timeout.connect(_on_hurt_timer_timeout)
+	print("DEBUG: _ready called for", get_name(), "at position:", global_position)
+
+func _exit_tree() -> void:
+	print("DEBUG: _exit_tree called for", get_name())
 
 func _physics_process(delta: float) -> void:
 	# DEBUG: trace when is_alive becomes false
