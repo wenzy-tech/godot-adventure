@@ -86,7 +86,8 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 func die() -> void:
 	print("DEBUG: die() called - current_hp:", current_hp, " max_hp:", max_hp)
 	is_alive = false
-	queue_free()
+	# TEMP: queue_free() disabled to test death source
+	pass
 
 func attack_player() -> void:
 	if not player_ref:
